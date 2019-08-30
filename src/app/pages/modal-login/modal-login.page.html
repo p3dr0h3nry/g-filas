@@ -1,0 +1,39 @@
+<ion-content class="content">
+<div class="divAll">
+  <div class="title" >
+      <img src="assets/imgs/logo2.png" class="logo_gestao">
+      <div *ngIf="!hasErro" >
+        <h2>
+            Seja Bem vindo!
+        </h2>
+        <h6>
+            Disparador de Mensagens
+        </h6>
+      </div>
+      <div *ngIf="hasErro" style="background-color: rgb(121, 24, 24); padding: 5px;">
+        <h2>
+            Erro!
+        </h2>
+        <h6>
+            {{erro}}
+        </h6>
+      </div>
+  </div>
+  <div class="containerInputs">
+    <form [formGroup]="formLogin" novalidate>
+
+          <div>
+              <ion-input placeholder="Login"  class="input" type="text" formControlName="login" id="login_"></ion-input>
+          </div>
+          <div>
+              <ion-input placeholder="Senha" class="input" type="password" formControlName="senha" id="senha_"></ion-input>
+          </div>
+
+            <button (click)="logar()"  ion-button class="button-login">Entrar</button>
+
+    </form>
+  </div>
+  
+  
+</div>
+</ion-content>

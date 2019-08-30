@@ -1,0 +1,103 @@
+.scroll-content {
+    padding-bottom: 0 !important;
+ }
+        .divAll{
+            height: 100%;
+            width: 100%;
+            //background-color: #0a233b;
+            color: white;
+            //margin-top: -25px;
+            padding-top: calc(100vh/8);
+
+            background: linear-gradient(-45deg, #0a233b , rgb(47, 74, 87) , rgb(72, 67, 99) );
+            height: 100%;
+        }
+        .title{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .containerInputs{
+            text-align: center;
+            background-color: rgba(255,255,255,.1);
+            width: 100%;
+            margin: 0 auto;
+            padding-top:20px;
+            padding-bottom: 20px; 
+        }
+        .input{
+            width: 80%;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid gray;
+            color: #0a233b;
+            margin: 0 auto;
+            /* margin-left: 10%; */
+            box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.2);
+            max-width: 220px;
+            padding-left: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+            
+        }
+        .button-login{
+            width: 80%;
+            border-radius: 10px;
+            background-color: #0a233b;
+            border: 1px solid gray;
+            max-width: 220px;
+            color: white;
+            padding: 10px;
+            box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.2);
+        }
+
+        h2{
+            font-weight: 600;
+            //color: red;
+        }
+        @keyframes animatedgradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        @-webkit-keyframes Gradient {
+            0% {
+                background-position: 0% 50%
+            }
+            50% {
+                background-position: 100% 50%
+            }
+            100% {
+                background-position: 0% 50%
+            }
+        }
+        
+        @-moz-keyframes Gradient {
+            0% {
+                background-position: 0% 50%
+            }
+            50% {
+                background-position: 100% 50%
+            }
+            100% {
+                background-position: 0% 50%
+            }
+        }
+        @keyframes Gradient {
+            0% {
+                background-position: 0% 50%
+            }
+            50% {
+                background-position: 100% 50%
+            }
+            100% {
+                background-position: 0% 50%
+            }
+        }
+
+

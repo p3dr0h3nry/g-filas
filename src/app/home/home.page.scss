@@ -1,0 +1,33 @@
+
+        .scroll-content {
+            padding-bottom: 0 !important;
+         }
+        .divAll{
+            height: 100%;
+            width: 100%;
+            color: white;
+            padding-top: calc(100vh/8);
+
+            background: linear-gradient(-45deg, #0a233b , rgb(47, 74, 87) , rgb(72, 67, 99) );
+            height: 100%;
+            padding: 20px;
+        }
+        .title{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+.isOn{
+    background-color: green;
+    color: white;
+}
+.isOff{
+    background-color: red;
+    color: white;
+}
+.profile{
+    background-color: black;
+}
+.row1{
+    width: 100%;
+    
+}

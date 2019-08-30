@@ -1,0 +1,7 @@
+{
+  "name": "gestaoS",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,57 @@
+<ion-content>
+  <div class="divAll" >
+    <div *ngIf="isLoged">
+      <label style=" color: white;" (click)="logout()">
+        Sair
+      </label>
+      <div class="title">
+        <img src="assets/imgs/logo2.png" class="logo_gestao">
+        <div>
+          <h3>
+            Olá, {{cliente}} !
+          </h3>
+          <h6 *ngIf="isTrial"
+            style="color:white; background-color: rgba(180, 144, 23, 0.3); padding: 5px; border-radius: 5px;">
+            Olá, seu teste acaba no dia {{criado}} e lhe restam {{resta}} SMS's.<br>
+            Entre em contato pelo site para adquirir o Gest-Filas!
+          </h6>
+        </div>
+
+      </div>
+      <table style="width:100%;">
+        <tbody>
+          <tr>
+            <td style="width: 70%; text-align: center;">
+              <label>SMS Enviadas</label>
+            </td>
+            <td style="width: 30%; text-align: center;">
+              <ion-badge color="secondary" style="width: 50px;">{{contador}}</ion-badge>
+            </td>
+          </tr>
+          <br>
+        </tbody>
+      </table>
+      <div style="text-align: center;">
+        <div *ngIf="enableToSend">
+          <ion-button [disabled]="!enableToSend" *ngIf="activeSender" color="success" style="width: 100%;"
+            (click)="iniciar()">
+            Iniciar
+          </ion-button>
+          <ion-button [disabled]="!enableToSend" *ngIf="activeSender" color="danger"
+            style="width: 100%; margin-top: 50px;" (click)="bt_eco()">
+            Modo Segundo Plano
+          </ion-button>
+          <ion-button *ngIf="!activeSender" color="danger" style="width: 100%; background-color: red; color: white;"
+            (click)="stopSms()">
+            Parar
+          </ion-button>
+        </div>
+        <div *ngIf="!enableToSend">
+          <ion-button color="danger" style="width: 100%;" (click)="permissoes_sms()">
+            Autorizar
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
