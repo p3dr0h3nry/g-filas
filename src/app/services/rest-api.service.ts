@@ -9,9 +9,11 @@ const apiUrl = "http://www.prod.agesi.com.br/api_gestao/api/";
 @Injectable({
   providedIn: 'root'
 })
-export class RestApiService {
+export class RestApiService  {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+
+  }
 
   post(data, type) {
     

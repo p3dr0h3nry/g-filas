@@ -25,7 +25,7 @@ export class HomePage {
   public cliente:any;
   public isTrial:boolean;
   public criado:any;
-  public resta:any;
+  //public resta:any;
   public erro:any;
   public cnpjData = { cnpj: ""};
   price:any='';
@@ -64,7 +64,7 @@ export class HomePage {
       this.cliente = localStorage.getItem('cliente');
       this.contador = localStorage.getItem('qtdSms');
       this.cnpjData.cnpj = localStorage.getItem('cnpj');
-      this.resta = 50 - parseInt(this.contador);
+      //this.resta = 50 - parseInt(this.contador);
       this.permissoes_sms();
       
     }else{
@@ -98,7 +98,7 @@ export class HomePage {
         localStorage.setItem('qtdSms',response.qtdSms);
         localStorage.setItem('isTrial',response.client_trial);
         this.contador=response.qtdSms;
-        this.resta = 50 - parseInt(this.contador);
+        //this.resta = 50 - parseInt(this.contador);
       }
     });
   }
@@ -116,39 +116,11 @@ export class HomePage {
       this.cliente = localStorage.getItem('cliente');
       this.criado = localStorage.getItem('data');
       this.contador = localStorage.getItem('qtdSms');
-      this.resta = 50 - parseInt(this.contador);
+      //this.resta = 50 - parseInt(this.contador);
       this.permissoes_sms();
       
     });
   }  
-
-  async send(num, msg) {
-    var options: {
-      replaceLineBreaks: true,
-      android: {
-        intent: "INTENT"
-      }
-    }
-    await this.atualizarDados();
-    if((this.contador<50 && localStorage.getItem('isTrial')=="1")|| localStorage.getItem('isTrial')=="0"){
-          
-    
-      this.permission.requestPermission(this.permission.PERMISSION.SEND_SMS).then(result => {
-        this.sms.send(num, msg, options).then(() => {
-          
-        }).catch((e) => {
-          alert(JSON.stringify(e));
-        });
-
-      }).catch((err) => {
-        alert(JSON.stringify(err));
-      });
-    }else{
-      this.activeSender=false;
-      this.stopSms();
-      alert('Seu período de teste acabou!');
-    }
-  }
 
   logout(){
     localStorage.clear();
@@ -242,62 +214,110 @@ export class HomePage {
     this.activeSender = false;
     this.senderStatus = true;
     //this.backgroundMode.moveToBackground();
-    
     this.backgroundMode.setDefaults({ title: "title", text: 'title', resume: true, hidden: true, silent: true});
     this.backgroundMode.enable();
     this.backgroundMode.on('enable').subscribe(() => {
-      this.buscarMsg();
+      
     });
+    console.log(this.backgroundMode.isActive);
+    this.buscarMsg();
+
+  
        
   }
 
-  buscarMsg() {
+  send(data) {
+    let options: {
+      replaceLineBreaks: true,
+      android: {
+        intent: ""
+      }
+    }
+    data.forEach(e => {
+      console.log('enviar: '+e['numero']);
+      this.sms.send(e['numero'], e['msg'], options).then(() => {
+        this.updateStatus();
+      }).catch((e:any) => {
+        alert("enviarSMS catch: "+JSON.stringify(e));
+      });
+    });
+      //console.log('enviar: '+num);
     
+
+  }
+
+  buscarMsg() {
+    console.log('Buscando');
     this.myService.post(this.cnpjData, "consultarGestao").then((result) => {
       let respostaDB = result;
       let data = JSON.parse(JSON.stringify(respostaDB));
-
+      console.log(data);
       if (JSON.parse(JSON.stringify(data)).success) {
-
         data = JSON.parse(JSON.stringify(data)).success;
         data = JSON.parse(JSON.stringify(data)).msg;
-
-
+        data= JSON.stringify(data);
+        data = JSON.parse(data);
+        this.atualizarDados();
+        this.send(data);
+        if(this.senderStatus){
+          setTimeout(() => {
+            this.buscarMsg();
+          }, 5000);
+        }
+/*
         data.forEach(e => {
-          this.updateStatus(e['id']);
-          this.send(e['numero'], e['msg']);
-          let c= this.contador+1;
-          this.resta = 50 - this.contador;
-          localStorage.setItem('qtdSms', String(c));
-        });
-        this.loop();
+          console.log(e['numero']);
+          this.updateStatus(e['id'],e['numero'], e['msg']);
+          this.loop();
 
+        });
+        */
       } else {
-        this.loop();
+        this.atualizarDados();
+        if(this.senderStatus){
+          setTimeout(() => {
+            this.buscarMsg();
+          }, 5000);
+        }
       }
     }).catch((err) => {
-      this.loop();
+      if(this.senderStatus){
+        setTimeout(() => {
+          this.buscarMsg();
+        }, 5000);
+      }
     });
   }
 
-  async loop() {
+
+
+  loop() {
+    
     if(this.senderStatus){
       setTimeout(() => {
-      //this.backgroundMode.on('enable').subscribe(() => {
-        //alert('enable');
-        this.backgroundMode.unlock();
+        console.log('loop');
+        //this.backgroundMode.unlock();
         this.buscarMsg();
-      //});
+
         
-      }, 10000);
+      }, 15000);
     }
   }
 
-  async updateStatus(id) {
-    let dados = { id: id, cnpj: localStorage.getItem('cnpj') };
+  updateStatus() {
+
+    let dados = { cnpj: localStorage.getItem('cnpj') };
     this.myService.post(dados, "updateStatus").then((result) => {
+      
       //console.log(result);
-      return true;
+      /*let data = JSON.parse(JSON.stringify(result));
+      console.log(data);
+      if (JSON.parse(JSON.stringify(data)).success) {
+        console.log('update ok');
+      }else{
+        return false;
+      }*/
+      
     });
   }
 
