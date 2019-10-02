@@ -24,7 +24,8 @@
     "@ionic-native/background-mode": "^5.0.0",
     "@ionic-native/badge": "^5.10.0",
     "@ionic-native/core": "^5.0.0",
-    "@ionic-native/fcm": "^5.11.0",
+    "@ionic-native/fcm": "^5.13.0",
+    "@ionic-native/insomnia": "^5.14.0",
     "@ionic-native/ionic-webview": "^5.0.0",
     "@ionic-native/local-notifications": "^5.10.0",
     "@ionic-native/open-native-settings": "^5.12.0",
@@ -33,12 +34,15 @@
     "@ionic-native/splash-screen": "^5.0.0",
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.1.0",
+    "at.gofg.sportscomputer.powermanagement": "~1.1.2",
     "cordova-android": "7.1.4",
     "cordova-open-native-settings": "1.5.2",
     "cordova-plugin-android-permissions": "1.0.0",
-    "cordova-plugin-background-mode": "0.7.2",
+    "cordova-plugin-background-mode": "git+https://github.com/katzer/cordova-plugin-background-mode.git",
     "cordova-plugin-badge": "0.8.8",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-fcm-with-dependecy-updated": "3.0.0",
+    "cordova-plugin-insomnia": "4.3.0",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-ionic-webview": "^4.1.1",
     "cordova-plugin-local-notification": "0.9.0-beta.2",
@@ -93,7 +97,14 @@
       "cordova-plugin-badge": {},
       "cordova-plugin-local-notification": {},
       "at.gofg.sportscomputer.powermanagement": {},
-      "cordova-open-native-settings": {}
+      "cordova-open-native-settings": {},
+      "cordova-plugin-fcm-with-dependecy-updated": {
+        "FCM_CORE_VERSION": "16.0.9",
+        "FCM_VERSION": "18.0.0",
+        "GRADLE_TOOLS_VERSION": "2.3.+",
+        "GOOGLE_SERVICES_VERSION": "3.0.0"
+      },
+      "cordova-plugin-insomnia": {}
     },
     "platforms": [
       "android"

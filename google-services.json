@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "329856731309",
-    "firebase_url": "https://smsgestao-f6b23.firebaseio.com",
-    "project_id": "smsgestao-f6b23",
-    "storage_bucket": "smsgestao-f6b23.appspot.com"
+    "project_number": "416593610721",
+    "firebase_url": "https://gestaofcm.firebaseio.com",
+    "project_id": "gestaofcm",
+    "storage_bucket": "gestaofcm.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:329856731309:android:fcf7164e016d6f13",
+        "mobilesdk_app_id": "1:416593610721:android:a86e183a74063a1dd1f4a0",
         "android_client_info": {
-          "package_name": "com.gestaosmssender.app"
+          "package_name": "com.gestaosmsfcm.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "329856731309-l3kemoi9m23dvad7lc9ldq32vvtbbe3q.apps.googleusercontent.com",
+          "client_id": "416593610721-ij68697lh6c2t4fcpcf84aasrgalj1v4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBEcJzlgJy_yKN-v1CMMJXosFS2lpbJHR4"
+          "current_key": "AIzaSyBWhpsbhY98ZIltzN6dG17W44Lxbfa5lYI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "329856731309-l3kemoi9m23dvad7lc9ldq32vvtbbe3q.apps.googleusercontent.com",
+              "client_id": "416593610721-ij68697lh6c2t4fcpcf84aasrgalj1v4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

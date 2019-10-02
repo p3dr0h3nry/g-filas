@@ -10,10 +10,9 @@
           <h3>
             Olá, {{cliente}} !
           </h3>
-          <h6 *ngIf="isTrial"
-            style="color:white; background-color: rgba(180, 144, 23, 0.3); padding: 5px; border-radius: 5px;">
-            Olá, seu teste acaba no dia {{criado}} e lhe restam {{resta}} SMS's.<br>
-            Entre em contato pelo site para adquirir o Gest-Filas!
+          <h6 >
+              <ion-textarea   value="{{chave}}" row="6"  type="text"  [(ngModel)]="chave"></ion-textarea >
+            
           </h6>
         </div>
 
@@ -33,9 +32,9 @@
       </table>
       <div style="text-align: center;">
         <div *ngIf="enableToSend">
-          <ion-button [disabled]="!enableToSend" *ngIf="activeSender" color="success" style="width: 100%;"
-            (click)="iniciar()">
-            Iniciar
+          <ion-button color="success" style="width: 100%;"
+            (click)="AtivarInsonia()">
+            Insonia
           </ion-button>
           <ion-button [disabled]="!enableToSend" *ngIf="activeSender" color="danger"
             style="width: 100%; margin-top: 50px;" (click)="bt_eco()">

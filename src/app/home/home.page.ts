@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { SMS } from '@ionic-native/sms/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { RestApiService } from '../services/rest-api.service';
@@ -7,12 +7,14 @@ import { LoadingController, Platform, ModalController } from '@ionic/angular';
 import { ModalLoginPage } from '../pages/modal-login/modal-login.page';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { Insomnia } from '@ionic-native/insomnia/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
   public contador: any;
   permitionSms: boolean;
@@ -30,7 +32,10 @@ export class HomePage {
   public cnpjData = { cnpj: ""};
   price:any='';
   token:any='';
+  public chave ='';
 
+  /*ionic cordova platform add android
+ionic cordova platform rm ios*/
   constructor(
 
     private sms: SMS,
@@ -40,11 +45,12 @@ export class HomePage {
     private loadCtrl: LoadingController,
     private modalCtrl:ModalController,
     private backgroundMode: BackgroundMode,
-    private settings: OpenNativeSettings
+    private settings: OpenNativeSettings,
+    private fcm: FCM,
+    private platform: Platform,
+    private insonia: Insomnia
   ) {
-    if(this.backgroundMode.isEnabled()){
-      this.backgroundMode.disable();
-    }
+
  
 
     this.isLoged=false;
@@ -56,6 +62,8 @@ export class HomePage {
     this.isTrial = false;
     this.contador =0;
     
+    this.fcm.subscribeToTopic('marketing');
+
     if (localStorage.getItem('cnpj')) {
       this.atualizarDados();
       this.isTrial = (localStorage.getItem('isTrial')=="1");
@@ -72,6 +80,77 @@ export class HomePage {
     }
 
   }
+
+  ngOnInit(){
+    this.backgroundMode.enable();
+    this.backgroundMode.disableWebViewOptimizations();
+    this.fcm.getToken().then(token=>{
+      console.log(token);
+      this.chave = token;
+      this.getPush();
+    })
+   
+  }
+
+  AtivarInsonia(){
+    this.insonia.keepAwake()
+    .then(
+      () => console.log('success'),
+      () => console.log('error')
+    );
+  }
+
+  getPush(){
+    //this.platform.ready().then(() => {
+      this.fcm.onNotification().subscribe((data:any)=>{
+        console.log(data);
+        if(data.wasTapped){
+          //console.log(data.title);
+          //console.log(data.body);
+          this.disparar(data.title,data.body);
+        }else{
+
+          console.log(data.title);
+          console.log(data.body);
+          this.disparar(data.title,data.body);
+          
+        }
+        
+      });
+    //});
+  }
+
+  disparar(num,msg) {
+    let options: {
+      replaceLineBreaks: true,
+      android: {
+        intent: ""
+      }
+    }
+
+      console.log('enviar: '+num);
+      this.sms.send(num, msg, options).then(() => {
+        this.updateStatus(num,msg);
+      }).catch((e:any) => {
+        alert("enviarSMS catch: "+JSON.stringify(e));
+      });
+    
+      //console.log('enviar: '+num);
+    
+
+  }
+
+  updateStatus(num,msg) {
+
+    let dados = { cnpj: localStorage.getItem('cnpj'), numero: num, mesg: msg};
+    this.myService.post(dados, "updateStatusNew").then((result) => {
+      //console.log("updateStatus:"+result);
+      this.atualizarDados();
+
+      
+    });
+  }
+
   bt_eco(){
     
     this.settings.open('battery_optimization').then(val=>{
@@ -91,14 +170,12 @@ export class HomePage {
         this.erro = response.error.e;
         this.hasErro = true;
       }else{
-        //console.log(response.success.cliente);
         response = response.success.cliente;
         this.hasErro = false;
-        //console.log('armazenar storage');
         localStorage.setItem('qtdSms',response.qtdSms);
         localStorage.setItem('isTrial',response.client_trial);
-        this.contador=response.qtdSms;
-        //this.resta = 50 - parseInt(this.contador);
+        this.contador="0";
+        this.contador=localStorage.getItem('qtdSms');
       }
     });
   }
@@ -236,7 +313,7 @@ export class HomePage {
     data.forEach(e => {
       console.log('enviar: '+e['numero']);
       this.sms.send(e['numero'], e['msg'], options).then(() => {
-        this.updateStatus();
+        this.updateStatus(e['numero'], e['msg']);
       }).catch((e:any) => {
         alert("enviarSMS catch: "+JSON.stringify(e));
       });
@@ -304,21 +381,6 @@ export class HomePage {
     }
   }
 
-  updateStatus() {
 
-    let dados = { cnpj: localStorage.getItem('cnpj') };
-    this.myService.post(dados, "updateStatus").then((result) => {
-      
-      //console.log(result);
-      /*let data = JSON.parse(JSON.stringify(result));
-      console.log(data);
-      if (JSON.parse(JSON.stringify(data)).success) {
-        console.log('update ok');
-      }else{
-        return false;
-      }*/
-      
-    });
-  }
 
 }

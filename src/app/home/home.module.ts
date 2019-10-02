@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import{ SMS} from '@ionic-native/sms/ngx';
+import { Insomnia } from '@ionic-native/insomnia/ngx';
 import{ AndroidPermissions} from '@ionic-native/android-permissions/ngx';
 import { RestApiService } from '../services/rest-api.service';
 import{BackgroundMode} from '@ionic-native/background-mode/ngx';
@@ -26,7 +27,7 @@ import { ModalLoginPage } from '../pages/modal-login/modal-login.page';
     ])
   ],
   
-  providers:[SMS, AndroidPermissions,RestApiService,BackgroundMode,Badge],
+  providers:[SMS, AndroidPermissions,RestApiService,BackgroundMode,Badge, Insomnia],
   declarations: [HomePage, ModalLoginPage],
   entryComponents:[ModalLoginPage]
 })
